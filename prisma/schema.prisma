@@ -1,0 +1,280 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
+}
+
+// Tipos de usuário
+enum UserRole {
+  ADMIN        // Dono da plataforma
+  OWNER        // Dono do negócio (cliente que paga)
+  STAFF        // Funcionário do negócio
+}
+
+enum BusinessType {
+  SALON        // Salão de beleza
+  BARBER       // Barbearia
+  CLINIC       // Clínica
+  SPA          // Spa
+  GYM          // Academia
+  THERAPY      // Terapias (massagem, fisio)
+  OTHER        // Outros
+}
+
+enum AppointmentStatus {
+  PENDING      // Aguardando
+  CONFIRMED    // Confirmado
+  COMPLETED    // Concluído
+  CANCELLED    // Cancelado
+  NO_SHOW      // Cliente não apareceu
+}
+
+enum SubscriptionPlan {
+  FREEMIUM     // Gratuito permanente (1 profissional, 20 agendamentos/mês)
+  INICIAL      // R$ 49/mês (2 profissionais)
+  PROFESSIONAL // R$ 99/mês (4-6 profissionais)
+  PREMIUM      // R$ 199/mês (ilimitado)
+}
+
+enum SubscriptionStatus {
+  TRIAL        // Período de teste
+  ACTIVE       // Ativo
+  PAST_DUE     // Pagamento atrasado
+  CANCELLED    // Cancelado
+}
+
+// Usuários do sistema (donos e staff)
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String
+  password      String
+  role          UserRole  @default(OWNER)
+  emailVerified DateTime?
+  image         String?
+  
+  businessId    String?
+  business      Business? @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  @@index([email])
+  @@index([businessId])
+}
+
+// Negócios (salões, clínicas, etc)
+model Business {
+  id          String        @id @default(cuid())
+  name        String
+  slug        String        @unique  // URL personalizada: agendaki.com/slug
+  email       String
+  phone       String
+  type        BusinessType  @default(SALON)
+  
+  // Endereço
+  address     String?
+  city        String?
+  state       String?
+  zipCode     String?
+  
+  // Customização
+  logo        String?      // URL da logo
+  coverImage  String?      // Imagem de capa
+  primaryColor String?     @default("#6366f1")
+  description String?
+  
+  // Configurações
+  allowCancellation     Boolean @default(true)
+  cancellationHours     Int     @default(24)    // Horas de antecedência
+  minAdvanceBookingHours Int    @default(2)     // Mínimo de horas de antecedência
+  
+  // Assinatura e Pagamentos
+  plan                  SubscriptionPlan   @default(FREEMIUM)
+  planStatus            SubscriptionStatus @default(ACTIVE)
+  trialEndsAt           DateTime?          // Data de fim do trial (14 dias)
+  subscriptionStartedAt DateTime?          // Quando começou a pagar
+  subscriptionEndsAt    DateTime?          // Data de cancelamento/expiração
+  
+  // Stripe
+  stripeCustomerId       String? @unique
+  stripeSubscriptionId   String? @unique
+  stripePriceId          String?          // ID do preço no Stripe
+  
+  // Limites do plano
+  maxProfessionals       Int @default(1)  // FREEMIUM: 1, INICIAL: 2, PROFESSIONAL: 6, PREMIUM: 15
+  maxServices            Int @default(3)  // FREEMIUM: 3, INICIAL: 10, PROFESSIONAL: 20, PREMIUM: 9999
+  maxAppointmentsPerMonth Int @default(20) // FREEMIUM: 20, outros: ilimitado (9999)
+  
+  // Relações
+  users         User[]
+  professionals Professional[]
+  services      Service[]
+  appointments  Appointment[]
+  customers     Customer[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([slug])
+  @@index([planStatus])
+}
+
+// Profissionais (cabeleireiros, manicures, etc)
+model Professional {
+  id          String   @id @default(cuid())
+  name        String
+  email       String?
+  phone       String?
+  photo       String?
+  bio         String?
+  
+  businessId  String
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  
+  // Horários de trabalho (JSON)
+  // Formato: { "monday": { "start": "09:00", "end": "18:00" }, ... }
+  workingHours Json    @default("{}")
+  
+  // Bloqueios (férias, folgas)
+  blockedDates String[] @default([]) // Array de datas ISO
+  
+  active      Boolean  @default(true)
+  
+  // Relações
+  services     ServiceProfessional[]
+  appointments Appointment[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([businessId])
+  @@index([active])
+}
+
+// Serviços oferecidos
+model Service {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+  duration    Int            // Duração em minutos
+  price       Decimal @db.Decimal(10, 2)
+  
+  businessId  String
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  
+  active      Boolean @default(true)
+  
+  // Relações
+  professionals ServiceProfessional[]
+  appointments  Appointment[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([businessId])
+  @@index([active])
+}
+
+// Tabela intermediária Serviço-Profissional (muitos para muitos)
+model ServiceProfessional {
+  id             String @id @default(cuid())
+  
+  serviceId      String
+  service        Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  
+  professionalId String
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  
+  createdAt      DateTime @default(now())
+  
+  @@unique([serviceId, professionalId])
+  @@index([serviceId])
+  @@index([professionalId])
+}
+
+// Clientes (quem agenda)
+model Customer {
+  id         String  @id @default(cuid())
+  name       String
+  email      String?
+  phone      String
+  
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  
+  // Relações
+  appointments Appointment[]
+  
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  @@index([businessId])
+  @@index([phone])
+}
+
+// Agendamentos
+model Appointment {
+  id          String            @id @default(cuid())
+  
+  businessId  String
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  
+  serviceId   String
+  service     Service @relation(fields: [serviceId], references: [id])
+  
+  professionalId String
+  professional   Professional @relation(fields: [professionalId], references: [id])
+  
+  customerId  String
+  customer    Customer @relation(fields: [customerId], references: [id])
+  
+  // Data e hora
+  date        DateTime // Data do agendamento
+  startTime   DateTime // Timestamp completo (data + hora)
+  endTime     DateTime // Timestamp completo (data + hora)
+  
+  // Status
+  status      AppointmentStatus @default(PENDING)
+  
+  // Observações
+  notes       String?
+  
+  // Relações
+  notifications Notification[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([businessId])
+  @@index([professionalId])
+  @@index([customerId])
+  @@index([date])
+  @@index([status])
+  @@index([startTime])
+}
+
+// Notificações enviadas
+model Notification {
+  id            String   @id @default(cuid())
+  
+  appointmentId String
+  appointment   Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  
+  type          String   // "confirmation", "reminder", "reminder_2h", "cancellation"
+  status        String   // "SENT", "FAILED", "PENDING"
+  
+  sentAt        DateTime?
+  error         String?
+  
+  createdAt     DateTime @default(now())
+  
+  @@index([appointmentId])
+  @@index([type])
+  @@index([sentAt])
+}
+
