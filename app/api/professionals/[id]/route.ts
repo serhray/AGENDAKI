@@ -6,9 +6,10 @@ import { prisma } from "@/lib/prisma"
 // PATCH - Atualizar profissional
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const session = await getServerSession(authOptions)
     
     if (!session?.user?.email) {
@@ -36,7 +37,7 @@ export async function PATCH(
     // Verificar se o profissional pertence ao negócio do usuário
     const existingProfessional = await prisma.professional.findFirst({
       where: {
-        id: params.id,
+        id,
         businessId: user.businessId
       }
     })
@@ -50,7 +51,7 @@ export async function PATCH(
 
     // Atualizar profissional
     const professional = await prisma.professional.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         name: name ?? existingProfessional.name,
         email: email !== undefined ? email : existingProfessional.email,
@@ -78,9 +79,10 @@ export async function PATCH(
 // DELETE - Deletar profissional
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const session = await getServerSession(authOptions)
     
     if (!session?.user?.email) {
@@ -106,7 +108,7 @@ export async function DELETE(
     // Verificar se o profissional pertence ao negócio do usuário
     const existingProfessional = await prisma.professional.findFirst({
       where: {
-        id: params.id,
+        id,
         businessId: user.businessId
       }
     })
@@ -120,7 +122,7 @@ export async function DELETE(
 
     // Deletar profissional
     await prisma.professional.delete({
-      where: { id: params.id }
+      where: { id }
     })
 
     return NextResponse.json({

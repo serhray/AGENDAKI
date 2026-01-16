@@ -6,9 +6,10 @@ import { prisma } from "@/lib/prisma"
 // PATCH - Atualizar cliente
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const session = await getServerSession(authOptions)
     
     if (!session?.user?.email) {
@@ -35,7 +36,7 @@ export async function PATCH(
     // Verificar se o cliente pertence ao negócio
     const existingCustomer = await prisma.customer.findFirst({
       where: {
-        id: params.id,
+        id,
         businessId: user.businessId
       }
     })
@@ -49,7 +50,7 @@ export async function PATCH(
 
     // Atualizar cliente
     const customer = await prisma.customer.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         name: name ?? existingCustomer.name,
         email: email !== undefined ? email : existingCustomer.email,
@@ -74,9 +75,10 @@ export async function PATCH(
 // DELETE - Deletar cliente
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const session = await getServerSession(authOptions)
     
     if (!session?.user?.email) {
@@ -101,7 +103,7 @@ export async function DELETE(
     // Verificar se o cliente pertence ao negócio
     const existingCustomer = await prisma.customer.findFirst({
       where: {
-        id: params.id,
+        id,
         businessId: user.businessId
       }
     })
@@ -115,7 +117,7 @@ export async function DELETE(
 
     // Deletar cliente
     await prisma.customer.delete({
-      where: { id: params.id }
+      where: { id }
     })
 
     return NextResponse.json({
