@@ -95,7 +95,7 @@ Você tem 2 opções:
 - Atualize o `.env` com suas credenciais
 
 **Opção B: PostgreSQL na nuvem (Grátis)**
-- Crie conta no Supabase: https://supabase.com
+- Banco já configurado com Prisma Postgres (via Vercel Storage)
 - Ou no Railway: https://railway.app
 - Copie a URL de conexão para o `.env`
 

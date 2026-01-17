@@ -12,8 +12,8 @@
 - Setup automático
 - Free tier: 256MB storage
 
-**Opção B: Supabase (Gratuito)**
-- Acesse: https://supabase.com
+**Opção B: Prisma Postgres (Recomendado - já configurado)**
+- Banco já criado e conectado via Vercel Storage
 - Criar novo projeto
 - Copiar DATABASE_URL (Connection String - Transaction)
 

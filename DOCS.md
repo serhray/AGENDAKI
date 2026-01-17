@@ -334,7 +334,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_live_..."
 ### Plataformas Recomendadas
 
 - **Frontend + Backend**: Vercel (grátis até certo limite)
-- **Banco de Dados**: Railway, Supabase, ou Neon (PostgreSQL gerenciado)
+- **Banco de Dados**: Prisma Postgres (via Vercel Storage)
 - **Email**: SendGrid (100 emails/dia grátis)
 - **Arquivos**: Cloudflare R2 ou AWS S3
 

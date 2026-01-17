@@ -3,7 +3,7 @@
 ## ✅ ANTES DE FAZER O PRIMEIRO DEPLOY
 
 ### 1. Banco de Dados
-- [ ] Escolher provedor (Vercel Postgres, Supabase ou Neon)
+- [x] Banco de dados configurado (Prisma Postgres via Vercel Storage)
 - [ ] Criar banco de dados
 - [ ] Copiar DATABASE_URL
 - [ ] Copiar DIRECT_URL (se aplicável)
