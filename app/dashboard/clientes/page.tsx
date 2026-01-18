@@ -189,48 +189,48 @@ export default function ClientesPage() {
   }
 
   return (
-    <div className="p-8">
+    <div className="space-y-4 md:space-y-6">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Clientes</h1>
-        <p className="text-gray-600 mt-2">Gerencie sua base de clientes</p>
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Clientes</h1>
+        <p className="text-gray-600 mt-2 text-sm md:text-base">Gerencie sua base de clientes</p>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 mb-6 md:mb-8">
+        <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-4 md:p-6 text-white">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-purple-100 text-sm">Total de Clientes</p>
-              <p className="text-3xl font-bold mt-2">{stats.total}</p>
+              <p className="text-purple-100 text-xs md:text-sm">Total de Clientes</p>
+              <p className="text-2xl md:text-3xl font-bold mt-1 md:mt-2">{stats.total}</p>
             </div>
-            <Users className="w-12 h-12 text-purple-200" />
+            <Users className="w-10 h-10 md:w-12 md:h-12 text-purple-200" />
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white">
+        <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-4 md:p-6 text-white">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-blue-100 text-sm">Com Agendamentos</p>
-              <p className="text-3xl font-bold mt-2">{stats.withAppointments}</p>
+              <p className="text-blue-100 text-xs md:text-sm">Com Agendamentos</p>
+              <p className="text-2xl md:text-3xl font-bold mt-1 md:mt-2">{stats.withAppointments}</p>
             </div>
-            <Calendar className="w-12 h-12 text-blue-200" />
+            <Calendar className="w-10 h-10 md:w-12 md:h-12 text-blue-200" />
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white">
+        <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-4 md:p-6 text-white">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-green-100 text-sm">Novos Este Mês</p>
-              <p className="text-3xl font-bold mt-2">{stats.newThisMonth}</p>
+              <p className="text-green-100 text-xs md:text-sm">Novos Este Mês</p>
+              <p className="text-2xl md:text-3xl font-bold mt-1 md:mt-2">{stats.newThisMonth}</p>
             </div>
-            <UserPlus className="w-12 h-12 text-green-200" />
+            <UserPlus className="w-10 h-10 md:w-12 md:h-12 text-green-200" />
           </div>
         </div>
       </div>
 
       {/* Search and Actions */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-4 md:mb-6">
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
@@ -238,12 +238,12 @@ export default function ClientesPage() {
             placeholder="Buscar por nome, telefone ou email..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-3 md:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent min-h-[44px]"
           />
         </div>
         <button
           onClick={openCreateModal}
-          className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors"
+          className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 md:py-2 rounded-lg flex items-center justify-center gap-2 transition-colors min-h-[44px]"
         >
           <UserPlus className="w-5 h-5" />
           Novo Cliente
@@ -260,73 +260,142 @@ export default function ClientesPage() {
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Cliente
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Contato
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Agendamentos
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Cadastrado em
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Ações
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {filteredCustomers.map((customer) => (
-                  <tr
-                    key={customer.id}
-                    className="hover:bg-gray-50 cursor-pointer transition-colors"
-                    onClick={() => openViewModal(customer)}
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                          <span className="text-purple-600 font-semibold">
-                            {customer.name.charAt(0).toUpperCase()}
-                          </span>
+          <>
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Cliente
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Contato
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Agendamentos
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Cadastrado em
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Ações
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {filteredCustomers.map((customer) => (
+                    <tr
+                      key={customer.id}
+                      className="hover:bg-gray-50 cursor-pointer transition-colors"
+                      onClick={() => openViewModal(customer)}
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                            <span className="text-purple-600 font-semibold">
+                              {customer.name.charAt(0).toUpperCase()}
+                            </span>
+                          </div>
+                          <div className="ml-4">
+                            <div className="text-sm font-medium text-gray-900">{customer.name}</div>
+                          </div>
                         </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">{customer.name}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900 flex items-center gap-2">
+                          <Phone className="w-4 h-4 text-gray-400" />
+                          {customer.phone}
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900 flex items-center gap-2">
+                        {customer.email && (
+                          <div className="text-sm text-gray-500 flex items-center gap-2 mt-1">
+                            <Mail className="w-4 h-4 text-gray-400" />
+                            {customer.email}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
+                          {customer._count?.appointments || 0} agendamentos
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {new Date(customer.createdAt).toLocaleDateString("pt-BR")}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            openEditModal(customer)
+                          }}
+                          className="text-blue-600 hover:text-blue-900 mr-4"
+                        >
+                          <Edit className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleDelete(customer.id)
+                          }}
+                          className="text-red-600 hover:text-red-900"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden divide-y divide-gray-200">
+              {filteredCustomers.map((customer) => (
+                <div
+                  key={customer.id}
+                  className="p-4 hover:bg-gray-50 transition-colors"
+                  onClick={() => openViewModal(customer)}
+                >
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-purple-600 font-semibold text-lg">
+                        {customer.name.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-base font-semibold text-gray-900 truncate">
+                        {customer.name}
+                      </h3>
+                      <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
                         <Phone className="w-4 h-4 text-gray-400" />
-                        {customer.phone}
+                        <span>{customer.phone}</span>
                       </div>
                       {customer.email && (
-                        <div className="text-sm text-gray-500 flex items-center gap-2 mt-1">
+                        <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
                           <Mail className="w-4 h-4 text-gray-400" />
-                          {customer.email}
+                          <span className="truncate">{customer.email}</span>
                         </div>
                       )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3 text-xs text-gray-500">
+                      <span className="px-2 py-1 rounded-full bg-blue-100 text-blue-800">
                         {customer._count?.appointments || 0} agendamentos
                       </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date(customer.createdAt).toLocaleDateString("pt-BR")}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <span>
+                        {new Date(customer.createdAt).toLocaleDateString("pt-BR")}
+                      </span>
+                    </div>
+                    
+                    <div className="flex gap-2">
                       <button
                         onClick={(e) => {
                           e.stopPropagation()
                           openEditModal(customer)
                         }}
-                        className="text-blue-600 hover:text-blue-900 mr-4"
+                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                       >
                         <Edit className="w-5 h-5" />
                       </button>
@@ -335,45 +404,46 @@ export default function ClientesPage() {
                           e.stopPropagation()
                           handleDelete(customer.id)
                         }}
-                        className="text-red-600 hover:text-red-900"
+                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       >
                         <Trash2 className="w-5 h-5" />
                       </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
+      </div>
       </div>
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 md:p-4">
           <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200">
-              <h2 className="text-2xl font-bold text-gray-900">
+            <div className="flex items-center justify-between p-4 md:p-6 border-b border-gray-200">
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900">
                 {modalMode === "create" && "Novo Cliente"}
                 {modalMode === "edit" && "Editar Cliente"}
                 {modalMode === "view" && "Detalhes do Cliente"}
               </h2>
               <button
                 onClick={closeModal}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-gray-400 hover:text-gray-600 transition-colors p-2"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5 md:w-6 md:h-6" />
               </button>
             </div>
 
             {/* Modal Body */}
-            <div className="p-6">
+            <div className="p-4 md:p-6">
               {modalMode === "view" ? (
-                <div className="space-y-6">
+                <div className="space-y-4 md:space-y-6">
                   {/* Customer Info */}
                   <div className="bg-purple-50 rounded-lg p-4">
-                    <h3 className="font-semibold text-lg mb-3">{selectedCustomer?.name}</h3>
+                    <h3 className="font-semibold text-base md:text-lg mb-3">{selectedCustomer?.name}</h3>
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center gap-2 text-gray-700">
                         <Phone className="w-4 h-4" />
@@ -394,20 +464,20 @@ export default function ClientesPage() {
 
                   {/* Appointments History */}
                   <div>
-                    <h3 className="font-semibold text-lg mb-3">Histórico de Agendamentos</h3>
+                    <h3 className="font-semibold text-base md:text-lg mb-3">Histórico de Agendamentos</h3>
                     {appointments.length === 0 ? (
-                      <p className="text-gray-500 text-center py-8">Nenhum agendamento encontrado</p>
+                      <p className="text-gray-500 text-center py-8 text-sm">Nenhum agendamento encontrado</p>
                     ) : (
                       <div className="space-y-2">
                         {appointments.map((appointment) => (
                           <div
                             key={appointment.id}
-                            className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors"
+                            className="border border-gray-200 rounded-lg p-3 md:p-4 hover:bg-gray-50 transition-colors"
                           >
                             <div className="flex justify-between items-start mb-2">
                               <div>
-                                <p className="font-medium">{appointment.service.name}</p>
-                                <p className="text-sm text-gray-600">{appointment.professional.name}</p>
+                                <p className="font-medium text-sm md:text-base">{appointment.service.name}</p>
+                                <p className="text-xs md:text-sm text-gray-600">{appointment.professional.name}</p>
                               </div>
                               <span className={`px-2 py-1 text-xs rounded-full ${
                                 appointment.status === "CONFIRMADO" ? "bg-green-100 text-green-800" :
@@ -431,20 +501,20 @@ export default function ClientesPage() {
                   <div className="flex gap-3">
                     <button
                       onClick={() => openEditModal(selectedCustomer!)}
-                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 md:py-2 rounded-lg transition-colors min-h-[44px]"
                     >
                       Editar Cliente
                     </button>
                     <button
                       onClick={() => handleDelete(selectedCustomer!.id)}
-                      className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors"
+                      className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-3 md:py-2 rounded-lg transition-colors min-h-[44px]"
                     >
                       Excluir Cliente
                     </button>
                   </div>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Nome *
@@ -454,7 +524,7 @@ export default function ClientesPage() {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-3 md:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent min-h-[44px]"
                       placeholder="Nome completo do cliente"
                     />
                   </div>
@@ -468,7 +538,7 @@ export default function ClientesPage() {
                       required
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-3 md:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent min-h-[44px]"
                       placeholder="(00) 00000-0000"
                     />
                   </div>
@@ -481,7 +551,7 @@ export default function ClientesPage() {
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-3 md:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent min-h-[44px]"
                       placeholder="email@exemplo.com"
                     />
                   </div>
@@ -490,13 +560,13 @@ export default function ClientesPage() {
                     <button
                       type="button"
                       onClick={closeModal}
-                      className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition-colors"
+                      className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-3 md:py-2 rounded-lg transition-colors min-h-[44px]"
                     >
                       Cancelar
                     </button>
                     <button
                       type="submit"
-                      className="flex-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors"
+                      className="flex-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 md:py-2 rounded-lg transition-colors min-h-[44px]"
                     >
                       {modalMode === "create" ? "Criar Cliente" : "Salvar Alterações"}
                     </button>
