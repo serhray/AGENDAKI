@@ -176,7 +176,7 @@ export default function ConfiguracoesPage() {
                     pattern="[a-z0-9-]+"
                   />
                   <p className="text-xs text-gray-500">
-                    Seu link: <span className="font-medium text-purple-600">agendaki.com/book/{business.slug}</span>
+                    Seu link: <span className="font-medium text-purple-600">agendaki-rose.vercel.app/book/{business.slug}</span>
                   </p>
                 </div>
               </div>
