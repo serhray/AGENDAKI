@@ -206,38 +206,38 @@ export default function BookingPage() {
 
   if (bookingSuccess) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-        <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full text-center">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-3 md:p-4">
+        <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 max-w-md w-full text-center">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <Check className="w-8 h-8 text-green-600" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Agendamento Confirmado!</h1>
-          <p className="text-gray-600 mb-6">
+          <h1 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Agendamento Confirmado!</h1>
+          <p className="text-sm md:text-base text-gray-600 mb-6">
             Seu agendamento foi realizado com sucesso. Você receberá uma confirmação em breve.
           </p>
           <div className="bg-gray-50 rounded-lg p-4 text-left space-y-2 mb-6">
-            <div className="flex justify-between">
+            <div className="flex justify-between text-sm md:text-base">
               <span className="text-gray-600">Serviço:</span>
               <span className="font-medium text-gray-900">{selectedService?.name}</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between text-sm md:text-base">
               <span className="text-gray-600">Profissional:</span>
               <span className="font-medium text-gray-900">{selectedProfessional?.name}</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between text-sm md:text-base">
               <span className="text-gray-600">Data:</span>
               <span className="font-medium text-gray-900">
                 {selectedDate?.toLocaleDateString("pt-BR")} às {selectedTime}
               </span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between text-sm md:text-base">
               <span className="text-gray-600">Valor:</span>
               <span className="font-medium text-green-600">
                 R$ {selectedService?.price.toFixed(2)}
               </span>
             </div>
           </div>
-          <p className="text-sm text-gray-500">
+          <p className="text-xs md:text-sm text-gray-500">
             Entre em contato através do {business?.phone} caso precise cancelar ou remarcar.
           </p>
         </div>
@@ -249,18 +249,18 @@ export default function BookingPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div 
-        className="py-8 px-4 text-white"
+        className="py-6 md:py-8 px-4 text-white"
         style={{ backgroundColor: business?.primaryColor || "#6366f1" }}
       >
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-2">{business?.name}</h1>
-          <p className="opacity-90">Agende seu horário online</p>
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">{business?.name}</h1>
+          <p className="opacity-90 text-sm md:text-base">Agende seu horário online</p>
         </div>
       </div>
 
       {/* Progress Steps */}
-      <div className="bg-white border-b border-gray-200 py-4">
-        <div className="max-w-4xl mx-auto px-4">
+      <div className="bg-white border-b border-gray-200 py-3 md:py-4">
+        <div className="max-w-4xl mx-auto px-2 md:px-4">
           <div className="flex items-center justify-between">
             {[
               { num: 1, label: "Serviço" },
@@ -272,7 +272,7 @@ export default function BookingPage() {
               <div key={s.num} className="flex items-center">
                 <div className="flex flex-col items-center">
                   <div 
-                    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
+                    className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-bold text-sm md:text-base ${
                       step >= s.num 
                         ? 'text-white' 
                         : 'bg-gray-200 text-gray-500'
@@ -281,13 +281,13 @@ export default function BookingPage() {
                       backgroundColor: step >= s.num ? business?.primaryColor : undefined 
                     }}
                   >
-                    {step > s.num ? <Check className="w-5 h-5" /> : s.num}
+                    {step > s.num ? <Check className="w-4 h-4 md:w-5 md:h-5" /> : s.num}
                   </div>
-                  <span className="text-xs mt-1 text-gray-600">{s.label}</span>
+                  <span className="text-[10px] md:text-xs mt-1 text-gray-600 hidden sm:block">{s.label}</span>
                 </div>
                 {index < 4 && (
                   <div 
-                    className={`w-12 h-1 mx-2 ${
+                    className={`w-6 md:w-12 h-1 mx-1 md:mx-2 ${
                       step > s.num ? '' : 'bg-gray-200'
                     }`}
                     style={{ 
@@ -297,6 +297,7 @@ export default function BookingPage() {
                 )}
               </div>
             ))}
+          </div>
           </div>
         </div>
       </div>
@@ -311,8 +312,8 @@ export default function BookingPage() {
 
         {/* Step 1: Select Service */}
         {step === 1 && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Escolha o serviço</h2>
+          <div className="space-y-3 md:space-y-4">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">Escolha o serviço</h2>
             {services.map((service) => (
               <div
                 key={service.id}
@@ -320,28 +321,28 @@ export default function BookingPage() {
                   setSelectedService(service)
                   setStep(2)
                 }}
-                className="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-6 cursor-pointer hover:border-purple-500 transition-colors"
+                className="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-4 md:p-6 cursor-pointer hover:border-purple-500 transition-colors active:scale-[0.98] min-h-[44px]"
               >
-                <div className="flex items-start justify-between">
+                <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <Scissors className="w-5 h-5 text-purple-600" />
-                      <h3 className="text-lg font-bold text-gray-900">{service.name}</h3>
+                      <Scissors className="w-4 h-4 md:w-5 md:h-5 text-purple-600" />
+                      <h3 className="text-base md:text-lg font-bold text-gray-900">{service.name}</h3>
                     </div>
                     {service.description && (
-                      <p className="text-gray-600 text-sm mb-3">{service.description}</p>
+                      <p className="text-gray-600 text-xs md:text-sm mb-3">{service.description}</p>
                     )}
-                    <div className="flex items-center gap-4 text-sm">
+                    <div className="flex items-center gap-3 md:gap-4 text-xs md:text-sm">
                       <div className="flex items-center gap-1 text-gray-600">
-                        <Clock className="w-4 h-4" />
+                        <Clock className="w-3 h-3 md:w-4 md:h-4" />
                         <span>{service.duration} min</span>
                       </div>
-                      <div className="font-bold text-green-600 text-lg">
+                      <div className="font-bold text-green-600 text-base md:text-lg">
                         R$ {service.price.toFixed(2)}
                       </div>
                     </div>
                   </div>
-                  <ArrowRight className="w-6 h-6 text-gray-400" />
+                  <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-gray-400 flex-shrink-0" />
                 </div>
               </div>
             ))}
@@ -350,15 +351,15 @@ export default function BookingPage() {
 
         {/* Step 2: Select Professional */}
         {step === 2 && (
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4">
             <button
               onClick={() => setStep(1)}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4"
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 p-2 min-h-[44px]"
             >
               <ArrowLeft className="w-4 h-4" />
               Voltar
             </button>
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Escolha o profissional</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">Escolha o profissional</h2>
             {professionals.map((professional) => (
               <div
                 key={professional.id}
@@ -366,16 +367,17 @@ export default function BookingPage() {
                   setSelectedProfessional(professional)
                   setStep(3)
                 }}
-                className="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-6 cursor-pointer hover:border-purple-500 transition-colors"
+                className="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-4 md:p-6 cursor-pointer hover:border-purple-500 transition-colors active:scale-[0.98] min-h-[44px]"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                      <User className="w-6 h-6 text-purple-600" />
+                  <div className="flex items-center gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <User className="w-5 h-5 md:w-6 md:h-6 text-purple-600" />
                     </div>
-                    <span className="text-lg font-medium text-gray-900">{professional.name}</span>
+                    <span className="text-base md:text-lg font-medium text-gray-900">{professional.name}</span>
                   </div>
-                  <ArrowRight className="w-6 h-6 text-gray-400" />
+                  <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-gray-400 flex-shrink-0" />
+                </div>
                 </div>
               </div>
             ))}
@@ -395,18 +397,18 @@ export default function BookingPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Escolha a data</h2>
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               {/* Month Navigation */}
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-4 md:mb-6">
                 <button
                   onClick={() => {
                     const newMonth = new Date(currentMonth)
                     newMonth.setMonth(newMonth.getMonth() - 1)
                     setCurrentMonth(newMonth)
                   }}
-                  className="p-2 hover:bg-gray-100 rounded-lg"
+                  className="p-2.5 md:p-2 hover:bg-gray-100 rounded-lg min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 flex items-center justify-center"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
-                <h3 className="text-lg font-bold capitalize">
+                <h3 className="text-base md:text-lg font-bold capitalize">
                   {currentMonth.toLocaleDateString("pt-BR", { month: "long", year: "numeric" })}
                 </h3>
                 <button
@@ -415,21 +417,21 @@ export default function BookingPage() {
                     newMonth.setMonth(newMonth.getMonth() + 1)
                     setCurrentMonth(newMonth)
                   }}
-                  className="p-2 hover:bg-gray-100 rounded-lg"
+                  className="p-2.5 md:p-2 hover:bg-gray-100 rounded-lg min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 flex items-center justify-center"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
               </div>
 
               {/* Calendar Grid */}
-              <div className="grid grid-cols-7 gap-2 mb-2">
+              <div className="grid grid-cols-7 gap-1 md:gap-2 mb-2">
                 {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((day) => (
-                  <div key={day} className="text-center font-semibold text-gray-600 text-sm py-2">
+                  <div key={day} className="text-center font-semibold text-gray-600 text-[10px] md:text-sm py-1 md:py-2">
                     {day}
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-7 gap-2">
+              <div className="grid grid-cols-7 gap-1 md:gap-2">
                 {getMonthDays().map((date, index) => {
                   if (!date) return <div key={index} />
                   
@@ -444,7 +446,7 @@ export default function BookingPage() {
                         setSelectedDate(date)
                         setStep(4)
                       }}
-                      className={`aspect-square rounded-lg text-sm font-medium transition-colors ${
+                      className={`aspect-square rounded-lg text-xs md:text-sm font-medium transition-colors min-h-[44px] md:min-h-0 ${
                         isSelected
                           ? 'text-white'
                           : isAvailable
@@ -469,20 +471,20 @@ export default function BookingPage() {
           <div>
             <button
               onClick={() => setStep(3)}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4"
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 p-2 min-h-[44px]"
             >
               <ArrowLeft className="w-4 h-4" />
               Voltar
             </button>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Escolha o horário</h2>
-            <p className="text-gray-600 mb-6">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Escolha o horário</h2>
+            <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-6">
               {selectedDate?.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long" })}
             </p>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
               {timeSlots.length === 0 ? (
-                <p className="text-center text-gray-500 py-8">Nenhum horário disponível para esta data</p>
+                <p className="text-center text-gray-500 py-8 text-sm md:text-base">Nenhum horário disponível para esta data</p>
               ) : (
-                <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
+                <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
                   {timeSlots.map((slot) => (
                     <button
                       key={slot.time}
@@ -491,7 +493,7 @@ export default function BookingPage() {
                         setSelectedTime(slot.time)
                         setStep(5)
                       }}
-                      className={`py-3 px-4 rounded-lg font-medium transition-colors ${
+                      className={`py-3 px-2 md:px-4 rounded-lg text-sm md:text-base font-medium transition-colors min-h-[44px] ${
                         slot.available
                           ? 'bg-gray-50 hover:bg-gray-100 text-gray-900 border-2 border-gray-200 hover:border-purple-500'
                           : 'bg-gray-100 text-gray-400 cursor-not-allowed'
@@ -520,8 +522,8 @@ export default function BookingPage() {
             
             {/* Summary */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-              <h3 className="font-bold text-gray-900 mb-4">Resumo do agendamento</h3>
-              <div className="space-y-2 text-sm">
+              <h3 className="font-bold text-gray-900 mb-3 md:mb-4 text-base md:text-lg">Resumo do agendamento</h3>
+              <div className="space-y-2 text-xs md:text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Serviço:</span>
                   <span className="font-medium text-gray-900">{selectedService?.name}</span>
@@ -550,8 +552,8 @@ export default function BookingPage() {
             </div>
 
             {/* Form */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="space-y-4">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
+              <div className="space-y-3 md:space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Nome completo *
@@ -561,7 +563,7 @@ export default function BookingPage() {
                     required
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 min-h-[44px]"
                     placeholder="Seu nome"
                   />
                 </div>
@@ -577,7 +579,7 @@ export default function BookingPage() {
                       required
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900"
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 min-h-[44px]"
                       placeholder="(00) 00000-0000"
                     />
                   </div>
@@ -593,7 +595,7 @@ export default function BookingPage() {
                       type="email"
                       value={customerEmail}
                       onChange={(e) => setCustomerEmail(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900"
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 min-h-[44px]"
                       placeholder="seu@email.com"
                     />
                   </div>
@@ -605,7 +607,7 @@ export default function BookingPage() {
                 <button
                   onClick={handleSubmit}
                   disabled={submitting || !customerName || !customerPhone}
-                  className="w-full text-white px-6 py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full text-white px-6 py-3 md:py-4 rounded-lg text-base md:text-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[44px]"
                   style={{ backgroundColor: business?.primaryColor }}
                 >
                   {submitting ? (
@@ -623,7 +625,7 @@ export default function BookingPage() {
 
                 {/* Aviso sobre lembretes automáticos */}
                 <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                  <p className="text-xs text-blue-800 flex items-start gap-2">
+                  <p className="text-xs md:text-sm text-blue-800 flex items-start gap-2">
                     <span className="text-base">📧</span>
                     <span>
                       <strong>Lembretes automáticos:</strong> Após a confirmação do agendamento, você receberá lembretes por email antes da data marcada.
