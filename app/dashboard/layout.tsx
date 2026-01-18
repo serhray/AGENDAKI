@@ -111,8 +111,8 @@ export default function DashboardLayout({
         {/* Sidebar - Desktop: sempre visível / Mobile: drawer */}
         <aside className={`
           fixed md:sticky top-16 md:top-0 left-0 h-[calc(100vh-4rem)] md:h-screen
-          w-64 bg-black/95 md:bg-black/50 backdrop-blur-xl border-r border-white/10 
-          flex flex-col z-50 transition-transform duration-300
+          w-64 bg-black border-r-2 border-indigo-500/50
+          flex flex-col z-50 transition-transform duration-300 shadow-2xl
           ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}>
           {/* Logo - Desktop only */}
