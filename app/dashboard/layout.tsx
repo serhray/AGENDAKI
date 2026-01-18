@@ -102,7 +102,7 @@ export default function DashboardLayout({
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <div 
-          className="md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-30"
+          className="md:hidden fixed top-16 left-64 right-0 bottom-0 bg-black/50 backdrop-blur-sm z-30"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
