@@ -150,16 +150,16 @@ export default function ProfessionalsPage() {
   )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-3xl font-bold">Profissionais</h1>
-          <p className="text-gray-400 mt-1">Gerencie sua equipe de profissionais</p>
+          <h1 className="text-2xl md:text-3xl font-bold">Profissionais</h1>
+          <p className="text-gray-400 mt-1 text-sm md:text-base">Gerencie sua equipe de profissionais</p>
         </div>
         <button
           onClick={() => openModal()}
-          className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 px-6 py-3 rounded-xl font-semibold transition-all shadow-lg"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 px-4 md:px-6 py-3 rounded-xl font-semibold transition-all shadow-lg min-h-[44px]"
         >
           <Plus className="h-5 w-5" />
           Adicionar Profissional
@@ -176,7 +176,7 @@ export default function ProfessionalsPage() {
       )}
 
       {/* Search */}
-      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4">
+      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-3 md:p-4">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
           <input
@@ -184,26 +184,26 @@ export default function ProfessionalsPage() {
             placeholder="Buscar profissional..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-indigo-500 transition-all"
+            className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-indigo-500 transition-all min-h-[44px]"
           />
         </div>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-          <p className="text-sm text-gray-400 mb-1">Total de Profissionais</p>
-          <p className="text-3xl font-bold text-indigo-400">{professionals.length}</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-6">
+          <p className="text-xs md:text-sm text-gray-400 mb-1">Total de Profissionais</p>
+          <p className="text-2xl md:text-3xl font-bold text-indigo-400">{professionals.length}</p>
         </div>
-        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-          <p className="text-sm text-gray-400 mb-1">Profissionais Ativos</p>
-          <p className="text-3xl font-bold text-green-400">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-6">
+          <p className="text-xs md:text-sm text-gray-400 mb-1">Profissionais Ativos</p>
+          <p className="text-2xl md:text-3xl font-bold text-green-400">
             {professionals.filter((p) => p.active).length}
           </p>
         </div>
-        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-          <p className="text-sm text-gray-400 mb-1">Profissionais Inativos</p>
-          <p className="text-3xl font-bold text-gray-400">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-6">
+          <p className="text-xs md:text-sm text-gray-400 mb-1">Profissionais Inativos</p>
+          <p className="text-2xl md:text-3xl font-bold text-gray-400">
             {professionals.filter((p) => !p.active).length}
           </p>
         </div>
@@ -224,16 +224,16 @@ export default function ProfessionalsPage() {
             {filteredProfessionals.map((professional) => (
               <div
                 key={professional.id}
-                className="p-6 hover:bg-white/5 transition-all group"
+                className="p-4 md:p-6 hover:bg-white/5 transition-all group"
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4 flex-1">
-                    <div className="h-14 w-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                  <div className="flex items-start md:items-center gap-3 md:gap-4 flex-1">
+                    <div className="h-12 w-12 md:h-14 md:w-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-lg md:text-xl font-bold flex-shrink-0">
                       {professional.name.charAt(0).toUpperCase()}
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-1">
-                        <h3 className="text-lg font-bold">{professional.name}</h3>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-1">
+                        <h3 className="text-base md:text-lg font-bold">{professional.name}</h3>
                         {professional.active ? (
                           <span className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full font-medium">
                             Ativo
@@ -244,7 +244,7 @@ export default function ProfessionalsPage() {
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-gray-400">
+                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 text-xs md:text-sm text-gray-400">
                         {professional.email && (
                           <div className="flex items-center gap-1">
                             <Mail className="h-4 w-4" />
@@ -264,10 +264,10 @@ export default function ProfessionalsPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all">
+                  <div className="flex items-center gap-2 md:opacity-0 md:group-hover:opacity-100 transition-all">
                     <button
                       onClick={() => handleToggleActive(professional)}
-                      className="p-2 hover:bg-white/10 rounded-lg transition-all"
+                      className="p-2.5 md:p-2 hover:bg-white/10 rounded-lg transition-all min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 flex items-center justify-center"
                       title={professional.active ? "Desativar" : "Ativar"}
                     >
                       {professional.active ? (
@@ -278,13 +278,13 @@ export default function ProfessionalsPage() {
                     </button>
                     <button
                       onClick={() => openModal(professional)}
-                      className="p-2 hover:bg-white/10 rounded-lg transition-all"
+                      className="p-2.5 md:p-2 hover:bg-white/10 rounded-lg transition-all min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 flex items-center justify-center"
                     >
                       <Edit className="h-5 w-5 text-blue-400" />
                     </button>
                     <button
                       onClick={() => handleDelete(professional.id)}
-                      className="p-2 hover:bg-white/10 rounded-lg transition-all"
+                      className="p-2.5 md:p-2 hover:bg-white/10 rounded-lg transition-all min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 flex items-center justify-center"
                     >
                       <Trash2 className="h-5 w-5 text-red-400" />
                     </button>
@@ -298,20 +298,20 @@ export default function ProfessionalsPage() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 border border-white/10 rounded-2xl max-w-md w-full p-6">
-            <h2 className="text-2xl font-bold mb-6">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 md:p-4">
+          <div className="bg-gray-900 border border-white/10 rounded-2xl max-w-md w-full p-4 md:p-6">
+            <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">
               {editingProfessional ? "Editar Profissional" : "Novo Profissional"}
             </h2>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-2">Nome *</label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-200 min-h-[44px]"
                   required
                 />
               </div>
@@ -322,7 +322,7 @@ export default function ProfessionalsPage() {
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-200 min-h-[44px]"
                 />
               </div>
 
@@ -332,7 +332,7 @@ export default function ProfessionalsPage() {
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-200 min-h-[44px]"
                 />
               </div>
 
@@ -350,14 +350,14 @@ export default function ProfessionalsPage() {
                 <button
                   type="button"
                   onClick={closeModal}
-                  className="flex-1 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl font-medium transition-all"
+                  className="flex-1 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl font-medium transition-all min-h-[44px]"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl font-semibold transition-all disabled:opacity-50"
+                  className="flex-1 px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl font-semibold transition-all disabled:opacity-50 min-h-[44px]"
                 >
                   {loading ? "Salvando..." : "Salvar"}
                 </button>
