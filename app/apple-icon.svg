@@ -1,0 +1,22 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="180" height="180" rx="40" fill="url(#gradient)"/>
+  <defs>
+    <linearGradient id="gradient" x1="0" y1="0" x2="180" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- Calendar outline -->
+  <rect x="40" y="55" width="100" height="85" rx="8" stroke="white" stroke-width="8" fill="none"/>
+  <!-- Calendar header -->
+  <path d="M40 75h100" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <!-- Calendar dots (appointments) -->
+  <circle cx="65" cy="95" r="5" fill="white"/>
+  <circle cx="90" cy="95" r="5" fill="white"/>
+  <circle cx="115" cy="95" r="5" fill="white"/>
+  <circle cx="65" cy="115" r="5" fill="white"/>
+  <circle cx="90" cy="115" r="5" fill="white"/>
+  <circle cx="115" cy="115" r="5" fill="white"/>
+  <!-- Calendar top markers -->
+  <path d="M60 40v30M120 40v30" stroke="white" stroke-width="8" stroke-linecap="round"/>
+</svg>

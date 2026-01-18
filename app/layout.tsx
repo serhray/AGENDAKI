@@ -16,10 +16,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "AGENDAKI - Agendamento Inteligente",
   description: "Sistema completo de gestão de agendamentos para seu negócio",
-  icons: {
-    icon: '/icon.tsx',
-    apple: '/apple-icon.tsx',
-  },
 };
 
 export default function RootLayout({
