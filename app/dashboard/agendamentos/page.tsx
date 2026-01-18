@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Plus, Search, Calendar, Clock, User, DollarSign, CheckCircle, XCircle, AlertCircle, FileText, Mail, Bell } from "lucide-react"
+import { Plus, Search, Calendar, Clock, User, DollarSign, CheckCircle, XCircle, AlertCircle, FileText, Mail, Bell, X } from "lucide-react"
 
 interface Customer {
   id: string
@@ -241,16 +241,16 @@ export default function AppointmentsPage() {
     : professionals.filter(p => p.active)
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-3xl font-bold">Agendamentos</h1>
-          <p className="text-gray-400 mt-1">Gerencie os agendamentos do seu negócio</p>
+          <h1 className="text-2xl md:text-3xl font-bold">Agendamentos</h1>
+          <p className="text-gray-400 mt-1 text-sm md:text-base">Gerencie os agendamentos do seu negócio</p>
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 px-6 py-3 rounded-xl font-semibold transition-all shadow-lg"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 px-4 md:px-6 py-3 rounded-xl font-semibold transition-all shadow-lg min-h-[44px]"
         >
           <Plus className="h-5 w-5" />
           Novo Agendamento
@@ -258,8 +258,8 @@ export default function AppointmentsPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-3 md:p-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
             <input
@@ -267,14 +267,14 @@ export default function AppointmentsPage() {
               placeholder="Buscar por cliente, serviço ou profissional..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+              className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 min-h-[44px]"
             />
           </div>
 
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+            className="px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 min-h-[44px]"
           >
             <option value="">Todos os status</option>
             <option value="PENDING">Pendente</option>
@@ -287,7 +287,7 @@ export default function AppointmentsPage() {
           <select
             value={filterProfessional}
             onChange={(e) => setFilterProfessional(e.target.value)}
-            className="px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+            className="px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 min-h-[44px]"
           >
             <option value="">Todos os profissionais</option>
             {professionals.map((prof) => (
@@ -298,13 +298,13 @@ export default function AppointmentsPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
         {Object.entries(statusConfig).map(([status, config]) => {
           const count = appointments.filter(a => a.status === status).length
           return (
-            <div key={status} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-              <p className="text-sm text-gray-400 mb-1">{config.label}</p>
-              <p className={`text-3xl font-bold text-${config.color}-400`}>{count}</p>
+            <div key={status} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-6">
+              <p className="text-xs md:text-sm text-gray-400 mb-1">{config.label}</p>
+              <p className={`text-2xl md:text-3xl font-bold text-${config.color}-400`}>{count}</p>
             </div>
           )
         })}
@@ -325,10 +325,10 @@ export default function AppointmentsPage() {
             {filteredAppointments.map((appointment) => {
               const StatusIcon = statusConfig[appointment.status].icon
               return (
-                <div key={appointment.id} className="p-6 hover:bg-white/5 transition-all group">
-                  <div className="flex items-start justify-between gap-4">
+                <div key={appointment.id} className="p-4 md:p-6 hover:bg-white/5 transition-all group">
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-3">
+                      <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-3">
                         <span className={`px-3 py-1 rounded-full text-xs font-medium bg-${statusConfig[appointment.status].color}-500/20 text-${statusConfig[appointment.status].color}-400 flex items-center gap-1`}>
                           <StatusIcon className="h-3 w-3" />
                           {statusConfig[appointment.status].label}
@@ -340,7 +340,7 @@ export default function AppointmentsPage() {
 
                       <h3 className="text-lg font-bold mb-2">{appointment.customer.name}</h3>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3 text-sm">
                         <div className="flex items-center gap-2 text-gray-300">
                           <FileText className="h-4 w-4 text-gray-400" />
                           {appointment.service.name}
@@ -364,20 +364,21 @@ export default function AppointmentsPage() {
                       )}
                     </div>
 
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 w-full md:w-auto md:min-w-[200px]">
                       {/* Botões de Email */}
-                      <div className="flex gap-2 mb-2">
+                      <div className="grid grid-cols-2 gap-2">
                         <button
                           onClick={() => handleSendEmail(appointment.id, 'confirmation')}
-                          className="flex-1 px-3 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1"
+                          className="px-3 py-2.5 md:py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1 min-h-[44px] md:min-h-0"
                           title="Enviar email de confirmação"
                         >
                           <Mail className="h-3 w-3" />
-                          Confirmação
+                          <span className="hidden sm:inline">Confirmação</span>
+                          <span className="sm:hidden">Confirmar</span>
                         </button>
                         <button
                           onClick={() => handleSendEmail(appointment.id, 'reminder')}
-                          className="flex-1 px-3 py-2 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1"
+                          className="px-3 py-2.5 md:py-2 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1 min-h-[44px] md:min-h-0"
                           title="Enviar lembrete"
                         >
                           <Bell className="h-3 w-3" />
@@ -388,7 +389,7 @@ export default function AppointmentsPage() {
                       <select
                         value={appointment.status}
                         onChange={(e) => handleStatusChange(appointment.id, e.target.value)}
-                        className="px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                        className="px-3 py-2.5 md:py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 min-h-[44px] md:min-h-0"
                       >
                         <option value="PENDING">Pendente</option>
                         <option value="CONFIRMED">Confirmado</option>
@@ -398,6 +399,13 @@ export default function AppointmentsPage() {
                       </select>
                       <button
                         onClick={() => handleDelete(appointment.id)}
+                        className="px-3 py-2.5 md:py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm transition-all min-h-[44px] md:min-h-0"
+                      >
+                        Deletar
+                      </button>
+                    </div>
+                  </div>
+                </div>
                         className="px-3 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm transition-all"
                       >
                         Deletar
@@ -413,18 +421,27 @@ export default function AppointmentsPage() {
 
       {/* Modal Novo Agendamento */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 border border-white/10 rounded-2xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-bold mb-6">Novo Agendamento</h2>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 md:p-4">
+          <div className="bg-gray-900 border border-white/10 rounded-2xl max-w-2xl w-full p-4 md:p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+              <h2 className="text-xl md:text-2xl font-bold">Novo Agendamento</h2>
+              <button
+                type="button"
+                onClick={() => setShowModal(false)}
+                className="p-2 hover:bg-white/10 rounded-lg transition-all"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="block text-sm font-medium">Cliente *</label>
                   <button
                     type="button"
                     onClick={() => setShowCustomerModal(true)}
-                    className="text-xs text-indigo-400 hover:text-indigo-300"
+                    className="text-xs text-indigo-400 hover:text-indigo-300 min-h-[44px] md:min-h-0 flex items-center"
                   >
                     + Novo Cliente
                   </button>
@@ -432,7 +449,7 @@ export default function AppointmentsPage() {
                 <select
                   value={formData.customerId}
                   onChange={(e) => setFormData({ ...formData, customerId: e.target.value })}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 min-h-[44px]"
                   required
                 >
                   <option value="">Selecione um cliente</option>
@@ -449,7 +466,7 @@ export default function AppointmentsPage() {
                 <select
                   value={formData.serviceId}
                   onChange={(e) => setFormData({ ...formData, serviceId: e.target.value, professionalId: "" })}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 min-h-[44px]"
                   required
                 >
                   <option value="">Selecione um serviço</option>
@@ -466,7 +483,7 @@ export default function AppointmentsPage() {
                 <select
                   value={formData.professionalId}
                   onChange={(e) => setFormData({ ...formData, professionalId: e.target.value })}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
                   required
                   disabled={!formData.serviceId}
                 >
@@ -477,7 +494,7 @@ export default function AppointmentsPage() {
                 </select>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">Data *</label>
                   <input
@@ -485,7 +502,7 @@ export default function AppointmentsPage() {
                     value={formData.date}
                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                     min={new Date().toISOString().split('T')[0]}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 min-h-[44px]"
                     required
                   />
                 </div>
@@ -496,7 +513,7 @@ export default function AppointmentsPage() {
                     type="time"
                     value={formData.startTime}
                     onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 min-h-[44px]"
                     required
                   />
                 </div>
@@ -516,14 +533,14 @@ export default function AppointmentsPage() {
                 <button
                   type="button"
                   onClick={closeModal}
-                  className="flex-1 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl font-medium transition-all"
+                  className="flex-1 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl font-medium transition-all min-h-[44px]"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl font-semibold transition-all disabled:opacity-50"
+                  className="flex-1 px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl font-semibold transition-all disabled:opacity-50 min-h-[44px]"
                 >
                   {loading ? "Salvando..." : "Criar Agendamento"}
                 </button>
@@ -535,18 +552,27 @@ export default function AppointmentsPage() {
 
       {/* Modal Novo Cliente */}
       {showCustomerModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 border border-white/10 rounded-2xl max-w-md w-full p-6">
-            <h2 className="text-2xl font-bold mb-6">Novo Cliente</h2>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 md:p-4">
+          <div className="bg-gray-900 border border-white/10 rounded-2xl max-w-md w-full p-4 md:p-6">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+              <h2 className="text-xl md:text-2xl font-bold">Novo Cliente</h2>
+              <button
+                type="button"
+                onClick={() => setShowCustomerModal(false)}
+                className="p-2 hover:bg-white/10 rounded-lg transition-all"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
 
-            <form onSubmit={handleCustomerSubmit} className="space-y-4">
+            <form onSubmit={handleCustomerSubmit} className="space-y-3 md:space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-2">Nome *</label>
                 <input
                   type="text"
                   value={customerFormData.name}
                   onChange={(e) => setCustomerFormData({ ...customerFormData, name: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-indigo-500"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-indigo-500 min-h-[44px]"
                   required
                 />
               </div>
@@ -557,7 +583,7 @@ export default function AppointmentsPage() {
                   type="tel"
                   value={customerFormData.phone}
                   onChange={(e) => setCustomerFormData({ ...customerFormData, phone: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-indigo-500"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-indigo-500 min-h-[44px]"
                   required
                 />
               </div>
@@ -568,7 +594,7 @@ export default function AppointmentsPage() {
                   type="email"
                   value={customerFormData.email}
                   onChange={(e) => setCustomerFormData({ ...customerFormData, email: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-indigo-500"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-indigo-500 min-h-[44px]"
                 />
               </div>
 
@@ -576,14 +602,14 @@ export default function AppointmentsPage() {
                 <button
                   type="button"
                   onClick={() => setShowCustomerModal(false)}
-                  className="flex-1 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl font-medium transition-all"
+                  className="flex-1 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl font-medium transition-all min-h-[44px]"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl font-semibold transition-all disabled:opacity-50"
+                  className="flex-1 px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl font-semibold transition-all disabled:opacity-50 min-h-[44px]"
                 >
                   {loading ? "Salvando..." : "Criar Cliente"}
                 </button>
